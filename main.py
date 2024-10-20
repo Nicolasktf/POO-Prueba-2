@@ -1,6 +1,7 @@
 import pymysql
 
 from empleado.class_empleado import Empleado
+from empleado.class_administrador import Administrador
 
 class BaseDatos:
     def __init__(self):
@@ -10,14 +11,14 @@ class BaseDatos:
             password='',
             db='prueba'
         )
-        self.cursos = self.conexion.cursor()
+        self.prueba = self.conexion.cursor()
         print("Conexion bd correcta")
 
     def seleccionarBD(self, id):
         sql = 'select id, nombre, edad from registro where id={}'.format(id)
         try:
-            self.cursos.execute(sql)
-            usuario = self.cursos.fetchone()
+            self.prueba.execute(sql)
+            usuario = self.prueba.fetchone()
 
             print("id: ", usuario[0])
             print("nombre: ", usuario[1])
@@ -30,8 +31,8 @@ class BaseDatos:
     def seleccionarTodo(self):
         sql = 'select id, nombre, edad from registro '
         try:
-            self.cursos.execute(sql)
-            usuario = self.cursos.fetchall()
+            self.prueba.execute(sql)
+            usuario = self.prueba.fetchall()
 
             for usu in usuario:
                 print("id: ", usuario[0])
@@ -46,7 +47,7 @@ class BaseDatos:
     def ingresar(self,id,nombre,edad):
         sql = "insert into registro (id,nombre,edad) values ({}, '{}', {})".format(id,nombre,edad)
         try:
-            self.cursos.execute(sql)
+            self.prueba.execute(sql)
             self.conexion.commit()
         except Exception as e:
             print("El valor ya existe",e)
@@ -56,7 +57,7 @@ class BaseDatos:
         sql = "update registro set nombre='{}' where id={}".format(nombre,id)
 
         try:
-            self.cursos.execute(sql)
+            self.prueba.execute(sql)
             self.conexion.commit()
         except Exception as e:
             raise
@@ -64,7 +65,7 @@ class BaseDatos:
     def borrar(self,id):
         sql = "delete from registro where id = {}".format(id)
         try:
-            self.cursos.execute(sql)
+            self.prueba.execute(sql)
             self.conexion.commit()
         except Exception as e:
             raise
@@ -75,5 +76,9 @@ class BaseDatos:
 
 basedat = BaseDatos()
 
-emp = Empleado()
-emp.password()
+adm = Administrador()
+adm.Crear_empleado()
+adm.Editar_empleado()
+#adm.Eliminar_empleado(1)
+
+
